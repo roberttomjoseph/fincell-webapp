@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FinCell - St. Xavier's College</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>FinCell</h1>
+        <h2>St. Xavier's College</h2>
+    </header>
+    <main>
+        <h3>Portfolio Summary</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Ticker</th>
+                    <th>Quantity</th>
+                    <th>Avg. Price</th>
+                    <th>Last Traded Price</th>
+                    <th>Profit/Loss</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for stock in data['stocks'] %}
+                <tr>
+                    <td>{{ stock['ticker'] }}</td>
+                    <td>{{ stock['quantity'] }}</td>
+                    <td>&#x20B9; {{ '{:,.2f}'.format(stock['avg_price']) }}</td>
+                    <td>&#x20B9; {{ '{:,.2f}'.format(stock['ltp']) }}</td>
+                    <td class="{% if stock['pnl'] >= 0 %}positive{% else %}negative{% endif %}">
+                        {% if stock['pnl'] >= 0 %}
+                            &#x20B9;{{ '{:,.2f}'.format(stock['pnl']) }}
+                        {% else %}
+                            (&#x20B9;{{ '{:,.2f}'.format(-stock['pnl']) }})
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="data-points">
+            <p>Last Updated: {{ data['last_updated'] }}</p>
+            <p>Total Cost: &#x20B9; {{ '{:,.2f}'.format(data['total_cost']) }}</p>
+            <p>Net PnL: {% if data['net_pnl'] >= 0 %}
+                <span class="positive">{% else %}
+                <span class="negative">{% endif %}&#x20B9;{{ '{:,.2f}'.format(data['net_pnl']) }}</span></p>
+        </div>
+        <form method="POST" class="update-form">
+            <button type="submit" class="update-button">Update Prices</button>
+        </form>
+    </main>
+</body>
+</html>
