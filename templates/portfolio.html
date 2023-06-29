@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Fincell Portfolio</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+<body>
+    <h1>Portfolio</h1>
+    <form method="POST">
+        <button type="submit">Update Prices</button>
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>Scrip</th>
+                <th>Quantity</th>
+                <th>Average Price</th>
+                <th>Current Price</th>
+                <th>Total Cost</th>
+                <th>Value</th>
+                <th>P&L</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for scrip, details in portfolio.items() %}
+                <tr>
+                    <td>{{ scrip }}</td>
+                    <td>{{ details['quantity'] }}</td>
+                    <td>{{ details['average_price'] }}</td>
+                    <td>{{ details['current_price'] }}</td>
+                    <td>{{ details['total_cost'] }}</td>
+                    <td>{{ details['value'] }}</td>
+                    <td>{{ details['pnl'] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <p>Overall Investment: {{ overall_investment }}</p>
+    <p>P&amp;L: {{ overall_pnl }}</p>
+</body>
+</html>

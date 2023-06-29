@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Place Trade</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+<body>
+    <h1>Place Trade</h1>
+    <form method="POST">
+        <label for="scrip">Stock Symbol:</label>
+        <input type="text" id="scrip" name="scrip"><br><br>
+        <label for="quantity">Quantity:</label>
+        <input type="text" id="quantity" name="quantity"><br><br>
+        <input type="submit" value="Place Trade">
+    </form>
+</body>
+</html>

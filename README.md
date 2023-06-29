@@ -1,2 +1,0 @@
-# fincell-webapp
- 

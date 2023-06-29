@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Fincell Webapp - Homepage</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+<body>
+    <h1>All Pages</h1>
+    <ul>
+        {% for page in pages %}
+            <li><a href="{{ page.url }}">{{ page.name }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
