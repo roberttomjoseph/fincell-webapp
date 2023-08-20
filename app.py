@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 from helpers import place_trade, get_stock_info
 from csv import reader
 
@@ -20,7 +20,7 @@ def place_trade_page():
         scrip = request.form['scrip']
         quantity = request.form['quantity']
         place_trade(scrip, "BSE", quantity)
-        return "Trade placed successfully!"
+        return redirect("/view_tradebook")
     else:
         return render_template('place_trade.html')
 
@@ -58,13 +58,16 @@ def view_portfolio():
             portfolio[scrip]['average_price'] = (portfolio[scrip]['average_price'] * (portfolio[scrip]['quantity'] + quantity) - quantity * price) / portfolio[scrip]['quantity']
             portfolio[scrip]['total_cost'] -= quantity * price
             portfolio[scrip]['value'] = portfolio[scrip]['quantity'] * price
-            portfolio[scrip]['pnl'] += quantity * (price - portfolio[scrip]['average_price'])
+            portfolio[scrip]['pnl'] = portfolio[scrip]['value'] - portfolio[scrip]['total_cost']
             overall_pnl += quantity * (price - portfolio[scrip]['average_price'])
 
     if request.method == 'POST':
         for scrip in portfolio.keys():
             price, _ = get_stock_info(scrip+".BSE")
             portfolio[scrip]['current_price'] = price
+            portfolio[scrip]['value'] = portfolio[scrip]['quantity'] * price
+            portfolio[scrip]['pnl'] = portfolio[scrip]['value'] - portfolio[scrip]['total_cost']
+            overall_pnl += portfolio[scrip]['pnl']
 
     return render_template('portfolio.html', portfolio=portfolio, overall_investment=overall_investment, overall_pnl=overall_pnl)
     
