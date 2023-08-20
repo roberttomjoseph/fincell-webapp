@@ -1,30 +1,111 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Fincell Tradebook</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-    <table>
-        <thead>
-            <tr>
-                <th>Stock Symbol</th>
-                <th>Exchange</th>
-                <th>Quantity</th>
-                <th>Price</th>
-                <th>Time</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for row in tradebook %}
-            <tr>
-                {% for cell in row %}
-                <td>{{ cell }}</td>
-                {% endfor %}
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <a href="/">Return to Index</a>
-</body>
+    <head>
+        <title>Fincell Tradebook</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
+        <style>
+            /* Set the background color to blue-black */
+            body {
+                background-color: #0c0c0c;
+                color: #fff;
+                font-family: 'Roboto', sans-serif;
+                padding: 20px;
+            }
+
+            /* Style the container */
+            .container {
+                max-width: 800px;
+                margin: 0 auto;
+            }
+
+            /* Style the h1 tag */
+            h1 {
+                font-size: 36px;
+                font-weight: 500;
+                margin-bottom: 20px;
+                text-align: center;
+            }
+
+            /* Style the table */
+            .table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-bottom: 20px;
+            }
+
+            /* Style the table head */
+            .table th {
+                text-align: left;
+                padding: 10px;
+                border-bottom: 2px solid #ddd;
+            }
+
+            /* Style the table body */
+            .table td {
+                text-align: left;
+                padding: 10px;
+                border-bottom: 1px solid #ddd;
+            }
+
+            /* Style the table body on hover */
+            .table tbody tr:hover {
+                background-color: #333;
+            }
+
+            /* Style the button */
+            .button {
+                color: #fff;
+                text-decoration: none;
+                display: inline-block;
+                padding: 10px 20px;
+                border-radius: 4px;
+                transition: background-color 0.2s ease-in-out;
+                font-weight: 500;
+                font-size: 16px;
+                margin: 5px;
+                background-color: #2196f3;
+                border: none;
+            }
+
+            /* Style the button on hover */
+            .button:hover {
+                background-color: #0d8bf2;
+            }
+
+            /* Style the button container */
+            .button-container {
+                text-align: center;
+                margin-top: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Tradebook</h1>
+            <table class = "table">
+                <thead>
+                    <tr>
+                        <th>Stock Symbol</th>
+                        <th>Exchange</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in tradebook %}
+                    <tr>
+                        {% for cell in row %}
+                        <td>{{ cell }}</td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="button-container">
+                <a href="/" class="button">Return to Index</a>
+            </div>
+        </div>
+    </body>
 </html>

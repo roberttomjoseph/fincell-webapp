@@ -3,40 +3,46 @@
     <head>
         <title>Fincell Portfolio</title>
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
     </head>
-<body>
-    <h1>Portfolio</h1>
-    <form method="POST">
-        <button type="submit">Update Prices</button>
-    </form>
-    <table>
-        <thead>
-            <tr>
-                <th>Scrip</th>
-                <th>Quantity</th>
-                <th>Average Price</th>
-                <th>Current Price</th>
-                <th>Total Cost</th>
-                <th>Value</th>
-                <th>P&L</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for scrip, details in portfolio.items() %}
-                <tr>
-                    <td>{{ scrip }}</td>
-                    <td>{{ details['quantity'] }}</td>
-                    <td>{{ details['average_price'] }}</td>
-                    <td>{{ details['current_price'] }}</td>
-                    <td>{{ details['total_cost'] }}</td>
-                    <td>{{ details['value'] }}</td>
-                    <td>{{ details['pnl'] }}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <p>Overall Investment: {{ overall_investment }}</p>
-    <p>P&amp;L: {{ overall_pnl }}</p>
-    <a href="/">Return to Index</a>
-</body>
+    <body>
+        <div class="container">
+            <h1>Portfolio</h1>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Scrip</th>  
+                        <th>Quantity</th>
+                        <th>Average Price</th>
+                        <th>Current Price</th>
+                        <th>Total Cost</th>
+                        <th>Value</th>
+                        <th>P&L</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for scrip, details in portfolio.items() %}
+                        <tr>
+                            <td>{{ scrip }}</td>
+                            <td>{{ details['quantity'] }}</td>
+                            <td>{{ details['average_price'] }}</td>
+                            <td>{{ details['current_price'] }}</td>
+                            <td>{{ details['total_cost'] }}</td>
+                            <td>{{ details['value'] }}</td>
+                            <td>{{ details['pnl'] }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="pnl-container">
+                <p class="pnl">Overall P&L: <span class="{% if overall_pnl >= 0 %}pnl-positive{% else %}pnl-negative{% endif %}">{{ overall_pnl }}</span></p>
+            </div>
+            <div class="button-container">
+                <form method="POST">
+                    <button type="submit" class="button">Update Prices</button>
+                </form>
+                <a href="/" class="button">Return to Index</a>
+            </div>
+        </div>
+    </body>
 </html>

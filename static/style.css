@@ -1,83 +1,71 @@
+/* Set the background color to blue-black */
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-}
-
-header {
-    background-color: #020a38;
+    background-color: #0c0c0c;
     color: #fff;
-    text-align: center;
-    padding: 10px;
+    font-family: 'Roboto', sans-serif;
 }
 
-h1, h2, h3 {
-    margin: 0;
-}
-
-main {
-    max-width: 800px;
-    margin: 0 auto;
+/* Add some padding to the body */
+body {
     padding: 20px;
 }
 
-table {
-    border-collapse: collapse;
-    width: 100%;
-}
-
-th, td {
-    text-align: left;
-    padding: 8px;
-}
-
-th {
-    background-color: #020a38;
-    color: #fff;
-}
-
-tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
-tr:hover {
-    background-color: #ccc;
-    transition: background-color 0.3s ease;
-  }
-
-.positive {
-    color: green;
-}
-
-.negative {
-    color: red;
-}
-
-.data-points {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-}
-
-.data-points p {
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.update-form {
-    margin-top: 20px;
+/* Style the h1 tag */
+h1 {
+    font-size: 36px;
+    font-weight: 500;
+    margin-bottom: 20px;
     text-align: center;
 }
 
-.update-button {
-    font-size: 18px;
-    padding: 10px 20px;
-    background-color: #020a38;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s;
+/* Style the table */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
 }
 
-.update-button:hover {
-    background-color: #555;
+/* Style the table head */
+.table th {
+    text-align: left;
+    padding: 10px;
+    border-bottom: 2px solid #ddd;
+}
+
+/* Style the table body */
+.table td {
+    text-align: left;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Style the table body on hover */
+.table tbody tr:hover {
+    background-color: #333;
+}
+
+/* Style the button */
+.button {
+    color: #fff;
+    text-decoration: none;
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease-in-out;
+    font-weight: 500;
+    font-size: 16px;
+    margin: 5px;
+    background-color: #2196f3;
+    border: none;
+}
+
+/* Style the button on hover */
+.button:hover {
+    background-color: #0d8bf2;
+}
+
+/* Style the button container */
+.button-container {
+    text-align: center;
+    margin-top: 20px;
 }
