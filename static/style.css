@@ -18,6 +18,32 @@ h1 {
     text-align: center;
 }
 
+/* Style the form group */
+.form-group {
+    margin-bottom: 20px;
+}
+
+/* Style the label */
+label {
+    display: block;
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+/* Style the input */
+input {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+    border: none;
+    background-color: #333;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 400;
+}
+
 /* Style the table */
 .table {
     width: 100%;
