@@ -14,7 +14,7 @@ body {
 h1 {
     font-size: 36px;
     font-weight: 500;
-    margin-bottom: 20px;
+    margin-bottom: 60px;
     text-align: center;
 }
 
@@ -94,4 +94,46 @@ input {
 .button-container {
     text-align: center;
     margin-top: 20px;
+}
+
+.link-list {
+    list-style-type: none; /* This removes the bullet points */
+    text-align: center; /* This centers the text */
+    padding: 0; /* This removes the default padding */
+    margin-top: 50px; /* This adds space below the heading */
+
+}
+
+.button {
+    display: inline-block; /* This allows us to add padding */
+    padding: 20px 30px; /* This makes the button larger */
+    text-decoration: none; /* This removes the underline */
+    font-size: 20px; /* This makes the text larger */
+    margin-bottom: 30px;
+}
+
+.back-button {
+    position: fixed; /* This makes the button stay in the same place even when you scroll */
+    bottom: 20px; /* This positions the button 20px from the bottom of the page */
+    left: 20px; /* This positions the button 20px from the left of the page */
+    display: inline-block; /* This allows us to add padding */
+    padding: 10px 20px; /* This makes the button larger */
+    background-color: #990000; /* This sets the background color to a darker red */
+    color: white; /* This sets the text color to white */
+    text-decoration: none; /* This removes the underline */
+    font-size: 20px; /* This sets the font size */
+    border-radius: 12px; /* This makes the button rounded */
+}
+
+.pnl-positive {
+    color: green;
+}
+
+.pnl-negative {
+    color: red;
+}
+
+.summary-container {
+    display: flex; /* This makes the container a flex container */
+    justify-content: space-between; /* This spaces the items evenly apart */
 }

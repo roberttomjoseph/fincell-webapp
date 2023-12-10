@@ -5,6 +5,7 @@ import time
 
 
 def get_ltp(symbol):
+
     def round_to_nearest_05(n):
         return round(n * 20) / 20
 
@@ -13,11 +14,11 @@ def get_ltp(symbol):
 
     ticker = yf.Ticker(symbol)
     todays_data = ticker.history(period='1d')
-    price = todays_data['Close'][0]
-    price = round_to_nearest_05(price)
-    price = float(truncate_to_two_decimal_points(price))
+    ltp = todays_data['Close'].iloc[0]
+    ltp = round_to_nearest_05(ltp)
+    ltp = float(truncate_to_two_decimal_points(ltp))
     formatted_time = datetime.fromtimestamp(time.time()).strftime('%H:%M:%S %d/%m/%Y')
-    return [price, formatted_time]
+    return [ltp, formatted_time]
 
 def place_equity_trade(scrip, exchange, quantity, trade_type):
     trade_details = [scrip, exchange, quantity] + get_ltp(f"{scrip}.{exchange}")

@@ -1,17 +1,35 @@
+#remember to change the tradebook path to absolute path while uploading to pythonanywhere
+
 from flask import Flask, render_template, request, redirect
+from jinja2 import Environment, select_autoescape
 from helpers import place_equity_trade, get_ltp
 from csv import reader
 
 app = Flask(__name__)
+
+env = Environment(autoescape=select_autoescape(['html', 'xml']))
+
+def intcomma(value):
+    return "{:,}".format(value)
+
+app.jinja_env.filters['intcomma'] = intcomma
+
+@app.route('/')
+def index():
+    pages = [
+        {'url': '/equity', 'name': 'Short-term Trades'},
+        {'url': 'https://fincell.org', 'name': 'Long-term Trades - Coming soon!'},
+    ]
+    return render_template('index.html', pages=pages)
 
 @app.route('/equity')
 def all_equity_pages():
     pages = [
         {'url': '/equity/view_tradebook', 'name': 'View Tradebook'},
         {'url': '/equity/place_trade', 'name': 'Place Trade'},
-        {'url': '/equity/view_portfolio', 'name': 'View Portfolio'}
+        {'url': '/equity/view_portfolio', 'name': 'View Positions'}
     ]
-    return render_template('index.html', portfolio_name = "Equity Portfolio", pages=pages)
+    return render_template('portfolio_index.html', portfolio_name = "Equity Portfolio", pages=pages)
 
 @app.route('/equity/view_tradebook')
 def view_tradebook():
@@ -37,8 +55,9 @@ def view_portfolio():
         tradebook = list(csv_reader)[1:]
 
     portfolio = {}
-    overall_investment = 0
+    invested_amount = 0
     overall_pnl = 0
+    portfolio_value = 0
 
     for trade in tradebook:
         scrip = trade[0]
@@ -50,7 +69,6 @@ def view_portfolio():
 
         if quantity > 0:
             portfolio[scrip]['quantity'] += quantity
-            overall_investment += quantity * price
             portfolio[scrip]['average_price'] = (portfolio[scrip]['average_price'] * (portfolio[scrip]['quantity'] - quantity) + quantity * price) / portfolio[scrip]['quantity']
             portfolio[scrip]['total_cost'] += quantity * price
             portfolio[scrip]['value'] = portfolio[scrip]['quantity'] * price
@@ -60,12 +78,14 @@ def view_portfolio():
         else:
             quantity = abs(quantity)
             portfolio[scrip]['quantity'] -= quantity
-            overall_investment -= quantity * price
             portfolio[scrip]['average_price'] = (portfolio[scrip]['average_price'] * (portfolio[scrip]['quantity'] + quantity) - quantity * price) / portfolio[scrip]['quantity']
             portfolio[scrip]['total_cost'] -= quantity * price
             portfolio[scrip]['value'] = portfolio[scrip]['quantity'] * price
             portfolio[scrip]['pnl'] = portfolio[scrip]['value'] - portfolio[scrip]['total_cost']
             overall_pnl += quantity * (price - portfolio[scrip]['average_price'])
+
+        invested_amount += quantity * portfolio[scrip]['average_price']
+        portfolio_value += portfolio[scrip]['value']
 
     if request.method == 'POST':
         for scrip in portfolio.keys():
@@ -75,7 +95,7 @@ def view_portfolio():
             portfolio[scrip]['pnl'] = portfolio[scrip]['value'] - portfolio[scrip]['total_cost']
             overall_pnl += portfolio[scrip]['pnl']
 
-    return render_template('portfolio.html', portfolio=portfolio, overall_investment=overall_investment, overall_pnl=overall_pnl)
+    return render_template('portfolio.html', portfolio=portfolio, invested_amount=invested_amount, overall_pnl=overall_pnl, portfolio_value=portfolio_value)
 
 if __name__ == '__main__':
     app.run(debug=True)

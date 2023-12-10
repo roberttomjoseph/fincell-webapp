@@ -24,24 +24,29 @@
                     {% for scrip, details in portfolio.items() %}
                         <tr>
                             <td>{{ scrip }}</td>
-                            <td>{{ details['quantity'] }}</td>
-                            <td>{{ details['average_price'] }}</td>
-                            <td>{{ details['current_price'] }}</td>
-                            <td>{{ details['total_cost'] }}</td>
-                            <td>{{ details['value'] }}</td>
-                            <td>{{ details['pnl'] }}</td>
+                            <td>{{ details['quantity']|intcomma }}</td>
+                            <td>{{ details['average_price']|intcomma }}</td>
+                            <td>{{ details['current_price']|intcomma }}</td>
+                            <td>{{ details['total_cost']|intcomma }}</td>
+                            <td>{{ details['value']|intcomma }}</td>
+                            <td class="{% if details['pnl'] >= 0 %}pnl-positive{% else %}pnl-negative{% endif %}">{{ details['pnl']|intcomma }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
-            <div class="pnl-container">
-                <p class="pnl">Overall P&L: <span class="{% if overall_pnl >= 0 %}pnl-positive{% else %}pnl-negative{% endif %}">{{ overall_pnl }}</span></p>
+                
+            <div class="summary-container">
+                <p class="pnl">Overall P&L: <span class="{% if overall_pnl >= 0 %}pnl-positive{% else %}pnl-negative{% endif %}">{{ overall_pnl|intcomma }}</span></p>
+                <p class="invested-amount">Total Investment: <span>{{ invested_amount|intcomma }}</span></p>
+                <p class="portfolio-value">Portfolio Value: <span>{{ portfolio_value|intcomma }}</span></p>
             </div>
+
             <div class="button-container">
                 <form method="POST">
-                    <button type="submit" class="button">Update Prices</button>
+                    <button type="submit" class="button">Update P&L</button>
                 </form>
             </div>
         </div>
+        <a href="/" class="back-button">Back</a>
     </body>
 </html>
