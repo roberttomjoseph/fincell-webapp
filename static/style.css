@@ -137,3 +137,14 @@ input {
     display: flex; /* This makes the container a flex container */
     justify-content: space-between; /* This spaces the items evenly apart */
 }
+
+.flashes {
+    list-style-type: none;
+    padding: 0;
+}
+.flashes li {
+    background-color:#f7f48b; /* pastel yellow */
+    color: black;
+    padding: 10px;
+    margin-bottom: 10px;
+}

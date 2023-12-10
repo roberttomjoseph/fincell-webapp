@@ -1,11 +1,13 @@
 #remember to change the tradebook path to absolute path while uploading to pythonanywhere
 
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, flash, url_for
 from jinja2 import Environment, select_autoescape
 from helpers import place_equity_trade, get_ltp
 from csv import reader
+import json
 
 app = Flask(__name__)
+app.secret_key = 'matlab ye secret key hai'
 
 env = Environment(autoescape=select_autoescape(['html', 'xml']))
 
@@ -45,6 +47,18 @@ def place_trade_page():
     if request.method == 'POST':
         scrip = request.form['scrip']
         quantity = request.form['quantity']
+        entered_code = request.form['analyst_code']
+
+        # Load the valid analyst codes
+        with open('data/analyst_codes.json', 'r') as file:
+        #with open('/home/fincell/mysite/data/analyst_codes.json', 'r') as file:
+            valid_codes = list(json.load(file).values())
+
+        # Check if the entered code is valid
+        if entered_code not in valid_codes:
+            flash('Invalid analyst code', 'error')
+            return redirect(url_for('place_trade_page'))
+
         place_equity_trade(scrip=scrip, exchange="NS", quantity=quantity, trade_type="equity")
         return redirect("/equity/view_tradebook")
     else:
