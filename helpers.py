@@ -23,6 +23,7 @@ def get_ltp(symbol):
 def place_equity_trade(scrip, exchange, quantity, trade_type):
     trade_details = [scrip, exchange, quantity] + get_ltp(f"{scrip}.{exchange}")
     with open("data/equity_trade_book.csv", "a", newline='') as f:
+    #with open("/home/fincell/mysite/data/equity_trade_book.csv", "a", newline='') as f:
         csv_writer = writer(f)
         csv_writer.writerow(trade_details)
         f.close()
