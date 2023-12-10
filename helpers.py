@@ -1,18 +1,27 @@
-import requests
 from csv import writer
+import yfinance as yf
+from datetime import datetime
+import time
 
-def get_stock_info(ticker):
-    api_key = "JL4CMULKA8L7SEAK" # Replace with your Alpha Vantage API key
-    url = f"https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={ticker}&apikey={api_key}"
-    response = requests.get(url)
-    data = response.json()
-    cost = float(data["Global Quote"]["05. price"])
-    time = data["Global Quote"]["07. latest trading day"]
-    return [cost, time]
 
-def place_trade(scrip, exchange, quantity):
-    trade_details = [scrip, exchange, quantity] + get_stock_info(f"{scrip}.{exchange}")
-    with open("data/trade_book.csv", "a", newline='') as f:
+def get_ltp(symbol):
+    def round_to_nearest_05(n):
+        return round(n * 20) / 20
+
+    def truncate_to_two_decimal_points(n):
+        return "{:.2f}".format(n)
+
+    ticker = yf.Ticker(symbol)
+    todays_data = ticker.history(period='1d')
+    price = todays_data['Close'][0]
+    price = round_to_nearest_05(price)
+    price = float(truncate_to_two_decimal_points(price))
+    formatted_time = datetime.fromtimestamp(time.time()).strftime('%H:%M:%S %d/%m/%Y')
+    return [price, formatted_time]
+
+def place_equity_trade(scrip, exchange, quantity, trade_type):
+    trade_details = [scrip, exchange, quantity] + get_ltp(f"{scrip}.{exchange}")
+    with open("data/equity_trade_book.csv", "a", newline='') as f:
         csv_writer = writer(f)
         csv_writer.writerow(trade_details)
         f.close()
