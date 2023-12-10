@@ -29,7 +29,7 @@ def all_equity_pages():
     pages = [
         {'url': '/equity/view_tradebook', 'name': 'View Tradebook'},
         {'url': '/equity/place_trade', 'name': 'Place Trade'},
-        {'url': '/equity/view_portfolio', 'name': 'View Positions'}
+        {'url': '/equity/view_portfolio', 'name': 'View Live Positions'}
     ]
     return render_template('portfolio_index.html', portfolio_name = "Equity Portfolio", pages=pages)
 
@@ -103,7 +103,6 @@ def view_portfolio():
             overall_pnl += quantity * (price - portfolio[scrip]['average_price'])
 
         invested_amount += quantity * portfolio[scrip]['average_price']
-        portfolio_value += portfolio[scrip]['value']
 
     if request.method == 'POST':
         for scrip in portfolio.keys():
