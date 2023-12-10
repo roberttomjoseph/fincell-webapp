@@ -34,6 +34,8 @@ def all_equity_pages():
 @app.route('/equity/view_tradebook')
 def view_tradebook():
     with open("data/equity_trade_book.csv", "r") as f:
+    #with open("/home/fincell/mysite/data/equity_trade_book.csv", "r") as f:
+
         csv_reader = reader(f)
         tradebook = list(csv_reader)[1:]
     return render_template('trade_book.html', tradebook=tradebook)
@@ -51,6 +53,8 @@ def place_trade_page():
 @app.route('/equity/view_portfolio', methods = ['GET', 'POST'])
 def view_portfolio():
     with open("data/equity_trade_book.csv", "r") as f:
+    #with open("/home/fincell/mysite/data/equity_trade_book.csv", "r") as f:
+
         csv_reader = reader(f)
         tradebook = list(csv_reader)[1:]
 
