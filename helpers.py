@@ -20,11 +20,15 @@ def get_ltp(symbol):
     formatted_time = datetime.fromtimestamp(time.time()).strftime('%H:%M:%S %d/%m/%Y')
     return [ltp, formatted_time]
 
+def get_current_time():
+    current_time = datetime.utcnow()
+    gmt_plus_5_30 = current_time + timedelta(hours=5, minutes=30)
+    formatted_time = gmt_plus_5_30.strftime('%H:%M:%S %d/%m/%Y')
+    return formatted_time
+
 def place_equity_trade(scrip, exchange, quantity, trade_type):
     trade_details = [scrip, exchange, quantity] + get_ltp(f"{scrip}.{exchange}")
     with open("data/equity_trade_book.csv", "a", newline='') as f:
-    #with open("/home/fincell/mysite/data/equity_trade_book.csv", "a", newline='') as f:
         csv_writer = writer(f)
         csv_writer.writerow(trade_details)
-        f.close()
     print(f"Trade placed successfully! - {trade_details}")
