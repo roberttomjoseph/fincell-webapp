@@ -87,20 +87,20 @@ def view_portfolio():
 
         if quantity > 0:
             portfolio[scrip]['quantity'] += quantity
-            portfolio[scrip]['average_price'] = (portfolio[scrip]['average_price'] * (portfolio[scrip]['quantity'] - quantity) + quantity * price) / portfolio[scrip]['quantity']
-            portfolio[scrip]['total_cost'] += quantity * price
-            portfolio[scrip]['value'] = portfolio[scrip]['quantity'] * price
+            portfolio[scrip]['average_price'] = round((portfolio[scrip]['average_price'] * (portfolio[scrip]['quantity'] - quantity) + quantity * price) / portfolio[scrip]['quantity'],2)
+            portfolio[scrip]['total_cost'] += round(quantity * price,2)
+            portfolio[scrip]['value'] = round(portfolio[scrip]['quantity'] * price,2)
             portfolio[scrip]['pnl'] = portfolio[scrip]['value'] - portfolio[scrip]['total_cost']
-            overall_pnl += portfolio[scrip]['pnl']
+            overall_pnl += round(portfolio[scrip]['pnl'],2)
 
         else:
             quantity = abs(quantity)
             portfolio[scrip]['quantity'] -= quantity
-            portfolio[scrip]['average_price'] = (portfolio[scrip]['average_price'] * (portfolio[scrip]['quantity'] + quantity) - quantity * price) / portfolio[scrip]['quantity']
-            portfolio[scrip]['total_cost'] -= quantity * price
-            portfolio[scrip]['value'] = portfolio[scrip]['quantity'] * price
+            portfolio[scrip]['average_price'] = round((portfolio[scrip]['average_price'] * (portfolio[scrip]['quantity'] + quantity) - quantity * price) / portfolio[scrip]['quantity'],2)
+            portfolio[scrip]['total_cost'] -= round(quantity * price,2)
+            portfolio[scrip]['value'] = round(portfolio[scrip]['quantity'] * price,2)
             portfolio[scrip]['pnl'] = portfolio[scrip]['value'] - portfolio[scrip]['total_cost']
-            overall_pnl += quantity * (price - portfolio[scrip]['average_price'])
+            overall_pnl += round(quantity * (price - portfolio[scrip]['average_price']),2)
 
         invested_amount += quantity * portfolio[scrip]['average_price']
 
@@ -108,9 +108,9 @@ def view_portfolio():
         for scrip in portfolio.keys():
             price = get_ltp(scrip+".NS")[0]
             portfolio[scrip]['current_price'] = price
-            portfolio[scrip]['value'] = portfolio[scrip]['quantity'] * price
+            portfolio[scrip]['value'] = round(portfolio[scrip]['quantity'] * price,2)
             portfolio[scrip]['pnl'] = portfolio[scrip]['value'] - portfolio[scrip]['total_cost']
-            overall_pnl += portfolio[scrip]['pnl']
+            overall_pnl += round(portfolio[scrip]['pnl'],2)
 
     return render_template('portfolio.html', portfolio=portfolio, invested_amount=invested_amount, overall_pnl=overall_pnl, portfolio_value=portfolio_value)
 
