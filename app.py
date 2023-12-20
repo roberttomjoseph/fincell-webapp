@@ -95,12 +95,19 @@ def view_portfolio():
 
         else:
             quantity = abs(quantity)
-            portfolio[scrip]['quantity'] -= quantity
-            portfolio[scrip]['average_price'] = round((portfolio[scrip]['average_price'] * (portfolio[scrip]['quantity'] + quantity) - quantity * price) / portfolio[scrip]['quantity'],2)
-            portfolio[scrip]['total_cost'] -= round(quantity * price,2)
-            portfolio[scrip]['value'] = round(portfolio[scrip]['quantity'] * price,2)
-            portfolio[scrip]['pnl'] = portfolio[scrip]['value'] - portfolio[scrip]['total_cost']
-            overall_pnl += round(quantity * (price - portfolio[scrip]['average_price']),2)
+            if quantity == portfolio[scrip]['quantity']:
+                portfolio[scrip]['quantity'] = 0 
+                portfolio[scrip]['average_price'] = 0
+                portfolio[scrip]['total_cost'] = 0
+                portfolio[scrip]['value'] = 0
+                portfolio[scrip]['pnl'] = 0
+            else:
+                portfolio[scrip]['quantity'] -= quantity
+                portfolio[scrip]['average_price'] = round((portfolio[scrip]['average_price'] * (portfolio[scrip]['quantity'] + quantity) - quantity * price) / portfolio[scrip]['quantity'],2)
+                portfolio[scrip]['total_cost'] -= round(quantity * price,2)
+                portfolio[scrip]['value'] = round(portfolio[scrip]['quantity'] * price,2)
+                portfolio[scrip]['pnl'] = portfolio[scrip]['value'] - portfolio[scrip]['total_cost']
+                overall_pnl += round(quantity * (price - portfolio[scrip]['average_price']),2)
 
         invested_amount += quantity * portfolio[scrip]['average_price']
 
